@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Générateur de Signature Email</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+        
+        .signature-preview-container {
+            text-align: center;
+            margin: 20px 0;
+        }
+        
+        .signature-preview {
+            width: 600px;
+            height: 180px;
+            margin: 0 auto;
+            border: 1px solid #ddd;
+            background-size: cover;
+            background-position: center;
+            display: table;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .signature-table {
+            width: 100%;
+            height: 100%;
+            border-collapse: collapse;
+        }
+        
+        .signature-cell {
+            vertical-align: middle;
+            padding: 15px;
+            background-color: rgba(255, 255, 255, 0.8); /* Légère transparence pour permettre la visibilité de l'image de fond */
+        }
+        
+        .signature-content {
+            color: #333;
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+        
+        .name-field {
+            font-weight: bold;
+            font-size: 16px;
+            margin-bottom: 5px;
+            min-height: 20px;
+        }
+        
+        .position-field {
+            font-style: italic;
+            margin-bottom: 10px;
+            min-height: 18px;
+        }
+        
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+        
+        .phone-field, .email-field {
+            min-height: 16px;
+        }
+        
+        .controls {
+            text-align: center;
+            margin: 20px 0;
+        }
+        
+        .controls input[type="text"] {
+            width: 300px;
+            padding: 8px;
+            margin: 0 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        
+        .controls button {
+            padding: 8px 15px;
+            margin: 0 5px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        
+        .controls button:hover {
+            background-color: #45a049;
+        }
+        
+        .instructions {
+            background-color: #e7f3ff;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+        
+        .instructions ul {
+            margin: 10px 0;
+            padding-left: 20px;
+        }
+        
+        [contenteditable="true"] {
+            outline: 1px solid transparent;
+            transition: outline-color 0.2s;
+        }
+        
+        [contenteditable="true"]:focus,
+        [contenteditable="true"]:hover {
+            outline: 1px dashed #007bff;
+            background-color: rgba(0, 123, 255, 0.05);
+            border-radius: 2px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Générateur de Signature Email Outlook</h1>
+        <p>Modifiez les champs ci-dessous pour personnaliser votre signature. La signature générée aura les dimensions 600x180px.</p>
+        
+        <div class="signature-preview-container">
+            <div class="signature-preview" id="signaturePreview">
+                <table class="signature-table" cellpadding="0" cellspacing="0">
+                    <tr>
+                        <td class="signature-cell">
+                            <div class="signature-content">
+                                <div class="name-field" contenteditable="true">Prénom NOM</div>
+                                <div class="position-field" contenteditable="true">Poste</div>
+                                <div class="contact-info">
+                                    <span class="phone-field" contenteditable="true">Tél : +33 (0)1 23 45 67 89</span>
+                                    <span class="email-field" contenteditable="true">email@entreprise.com</span>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        
+        <div class="controls">
+            <label for="backgroundImage">Image de fond (URL) :</label>
+            <input type="text" id="backgroundImage" placeholder="https://example.com/image.jpg">
+            <button onclick="updateBackground()">Appliquer l'image</button>
+            <button onclick="resetBackground()">Réinitialiser</button>
+        </div>
+        
+        <div class="instructions">
+            <h3>Instructions :</h3>
+            <ul>
+                <li>Modifiez les champs en surbrillance pour personnaliser votre signature</li>
+                <li>Entourez la signature avec une image de fond en utilisant le champ ci-dessus</li>
+                <li>La signature finale aura les dimensions 600x180px comme requis</li>
+                <li>Copiez la signature directement depuis la zone ci-dessus pour l'utiliser dans Outlook</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        function updateBackground() {
+            const imageUrl = document.getElementById('backgroundImage').value;
+            const preview = document.getElementById('signaturePreview');
+            
+            if (imageUrl) {
+                preview.style.backgroundImage = `url('${imageUrl}')`;
+            } else {
+                preview.style.backgroundImage = 'none';
+            }
+        }
+        
+        function resetBackground() {
+            document.getElementById('backgroundImage').value = '';
+            document.getElementById('signaturePreview').style.backgroundImage = 'none';
+        }
+        
+        // Ajouter un gestionnaire d'événement pour appliquer l'image de fond immédiatement lors de la saisie
+        document.getElementById('backgroundImage').addEventListener('input', updateBackground);
+    </script>
+</body>
+</html>
